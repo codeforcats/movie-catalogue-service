@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 @RestController
-@RequestMapping("catalogue")
+@RequestMapping("/catalogues")
 public class MovieCatalogueResource {
 
     @RequestMapping("/{userId}")
