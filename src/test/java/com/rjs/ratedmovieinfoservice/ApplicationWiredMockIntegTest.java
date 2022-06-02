@@ -8,6 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 
@@ -58,6 +62,11 @@ class ApplicationWiredMockIntegTest {
 
 
         Assertions.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+        Collection<MovieRating> expectedMovieRatings =
+                Arrays.asList(new MovieRating("Jaws", 4), new MovieRating("Star Wars", 3));
+        List<MovieRating> movieRatings = Arrays.asList(responseEntity.getBody());
+        Assertions.assertThat(movieRatings).isEqualTo(expectedMovieRatings);
 
     }
 }
