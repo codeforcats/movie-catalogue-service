@@ -1,13 +1,13 @@
-package com.rjs.moviecatalogueservice;
+package com.rjs.ratedmovieinfoservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MovieCatalogueServiceApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MovieCatalogueServiceApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 }
