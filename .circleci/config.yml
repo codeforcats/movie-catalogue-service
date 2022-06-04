@@ -1,0 +1,26 @@
+version: 2.1
+
+jobs:
+
+  build job:
+    docker:
+      - image: cimg/openjdk:17.0.3
+    steps:
+      - checkout
+      - run:
+          name: clean
+          command: mvn clean
+      - run:
+          name: compile
+          command: mvn compile
+      - run:
+          name: run unit tests
+          command: mvn test
+      - run:
+          name: run integration tests
+          command: mvn verify
+
+workflows:
+  build workflow:
+    jobs:
+      - build job
