@@ -14,7 +14,7 @@ public class MovieInfoProvider {
         RestTemplate restTemplate = new RestTemplate();
 
         ResponseEntity<MovieInfo> responseEntity = restTemplate.getForEntity("http://localhost:8082/movies/{movieId}",
-                MovieInfo.class, "movieId");
+                MovieInfo.class, movieId);
 
         if (responseEntity.getStatusCode() == HttpStatus.NOT_FOUND) {
             return Optional.empty();

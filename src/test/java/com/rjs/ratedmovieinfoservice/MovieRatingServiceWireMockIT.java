@@ -15,36 +15,12 @@ import java.util.List;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 
-class ApplicationWiredMockIT {
-
-    @RegisterExtension
-    static WireMockExtension movieInfoServiceMock = WireMockExtension.newInstance()
-            .options(wireMockConfig().port(8082))
-            .build();
+class MovieRatingServiceWireMockIT {
 
     @RegisterExtension
     static WireMockExtension movieRatingsServiceMock = WireMockExtension.newInstance()
             .options(wireMockConfig().port(8083))
             .build();
-    @Test
-    void wireMockMovieInfoService() {
-
-        movieInfoServiceMock.stubFor(get(urlEqualTo("/movies/Jaws"))
-                        .willReturn(aResponse()
-                                .withStatus(200)
-                                .withHeader("Content-Type", "application/json")
-                                .withBody("{\"movieId\":\"Jaws\",\"description\":\"A man eating shark.\"}")));
-
-        RestTemplate restTemplate = new RestTemplate();
-
-        ResponseEntity<MovieInfo> responseEntity = restTemplate.getForEntity("http://localhost:8082/movies/{movieId}",
-                MovieInfo.class, "Jaws");
-
-        MovieInfo expectedMovieInfo = new MovieInfo("Jaws", "A man eating shark.");
-        MovieInfo movieInfo = responseEntity.getBody();
-        Assertions.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-        Assertions.assertThat(responseEntity.getBody()).isEqualTo(expectedMovieInfo);
-    }
 
     @Test
     void wireMockMovieRatingService() {
@@ -67,6 +43,5 @@ class ApplicationWiredMockIT {
                 Arrays.asList(new MovieRating("Jaws", 4), new MovieRating("Star Wars", 3));
         List<MovieRating> movieRatings = Arrays.asList(responseEntity.getBody());
         Assertions.assertThat(movieRatings).isEqualTo(expectedMovieRatings);
-
     }
 }

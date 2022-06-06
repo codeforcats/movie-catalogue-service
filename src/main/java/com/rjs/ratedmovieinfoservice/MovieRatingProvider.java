@@ -23,7 +23,7 @@ public class MovieRatingProvider {
                         HttpMethod.GET,
                         null,
                         new ParameterizedTypeReference<>() {
-                }, "userId");
+                }, userId);
 
         if (responseEntity.getStatusCode() == HttpStatus.NOT_FOUND) {
             return Optional.empty();
