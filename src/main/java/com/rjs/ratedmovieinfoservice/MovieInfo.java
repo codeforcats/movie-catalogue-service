@@ -9,7 +9,6 @@ import lombok.*;
 @ToString
 @EqualsAndHashCode
 public  class MovieInfo{
-
     private String movieId;
     private String description;
 }
