@@ -1,0 +1,22 @@
+version: '3.9'
+services:
+
+  rated-movie-info-service:
+    container_name: rated-movie-info-service-container
+    image: rated-movie-info-service-image
+    ports:
+      - 8081:8081
+
+
+  movie-rating-service:
+    container_name: movie-rating-service-container
+    image: movie-rating-service-image
+    ports:
+    - 8082:8082
+
+
+  movie-info-service:
+    container_name: movie-info-service-container
+    image: movie-info-service-image
+    ports:
+      - 8083:8083
