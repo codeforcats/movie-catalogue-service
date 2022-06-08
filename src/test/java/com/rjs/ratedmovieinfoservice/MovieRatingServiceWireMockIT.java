@@ -4,6 +4,8 @@ import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
@@ -15,12 +17,16 @@ import java.util.List;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 
+@SpringBootTest
 class MovieRatingServiceWireMockIT {
 
     @RegisterExtension
     static WireMockExtension movieRatingsServiceMock = WireMockExtension.newInstance()
             .options(wireMockConfig().port(8083))
             .build();
+
+    @Value("${movie.rating.service.url}")
+    private String movieRatingServiceUrl;
 
     @Test
     void wireMockMovieRatingService() {
@@ -33,7 +39,7 @@ class MovieRatingServiceWireMockIT {
 
         RestTemplate restTemplate = new RestTemplate();
 
-        ResponseEntity<MovieRating[]> responseEntity = restTemplate.getForEntity("http://localhost:8083/movieRatings/{userId}",
+        ResponseEntity<MovieRating[]> responseEntity = restTemplate.getForEntity(movieRatingServiceUrl + "/" + "{userId}",
                 MovieRating[].class, "joe");
 
 
