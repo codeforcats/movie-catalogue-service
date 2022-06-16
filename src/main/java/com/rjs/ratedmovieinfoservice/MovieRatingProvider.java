@@ -1,5 +1,6 @@
 package com.rjs.ratedmovieinfoservice;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -14,12 +15,15 @@ import java.util.Optional;
 @Component
 public class MovieRatingProvider {
 
+    @Value("${movie.rating.service.url}")
+    private String movieRatingsUrl;
+
     public Optional<Collection<MovieRating>> getMovieRatings(String userId){
 
         RestTemplate restTemplate = new RestTemplate();
 
         ResponseEntity<List<MovieRating>> responseEntity =
-                restTemplate.exchange("http://localhost:8083/movieRatings/{userId}",
+                restTemplate.exchange(movieRatingsUrl + "/{userId}",
                         HttpMethod.GET,
                         null,
                         new ParameterizedTypeReference<>() {

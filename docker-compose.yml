@@ -2,21 +2,21 @@ version: '3.9'
 services:
 
   rated-movie-info-service:
-    container_name: rated-movie-info-service-container
+    container_name: rated-movie-info-container
     image: rated-movie-info-service-image
     ports:
       - 8081:8081
-
-
-  movie-rating-service:
-    container_name: movie-rating-service-container
-    image: movie-rating-service-image
-    ports:
-    - 8082:8082
-
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
 
   movie-info-service:
-    container_name: movie-info-service-container
+    container_name: movie-info-container
     image: movie-info-service-image
+    ports:
+      - 8082:8082
+
+  movie-rating-service:
+    container_name: movie-rating-container
+    image: movie-rating-service-image
     ports:
       - 8083:8083
