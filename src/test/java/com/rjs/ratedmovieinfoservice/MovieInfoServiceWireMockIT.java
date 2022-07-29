@@ -8,10 +8,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
@@ -27,8 +25,7 @@ public class MovieInfoServiceWireMockIT {
     private String movieInfoServiceUrl;
 
     @Test
-    void wireMockMovieInfoService() {
-
+    void whenMovieIdIsKnownShouldReturnPopulatedMovieInfo() {
 
         movieInfoServiceMock.stubFor(get(urlEqualTo("/movies/Jaws"))
                 .willReturn(aResponse()
@@ -42,9 +39,23 @@ public class MovieInfoServiceWireMockIT {
                 MovieInfo.class, "Jaws");
 
         MovieInfo expectedMovieInfo = new MovieInfo("Jaws", "A man eating shark.");
-        MovieInfo movieInfo = responseEntity.getBody();
         Assertions.assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         Assertions.assertThat(responseEntity.getBody()).isEqualTo(expectedMovieInfo);
     }
 
+    @Test
+    void whenMovieIdNotKnownShouldReturnStatusNotFound() {
+
+        movieInfoServiceMock.stubFor(get(urlEqualTo("/movies/Jaws"))
+                .willReturn(aResponse().withStatus(404)));
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        Exception exception = org.junit.jupiter.api.Assertions.assertThrows(
+                HttpClientErrorException.NotFound.class,
+                ()-> restTemplate.getForEntity(movieInfoServiceUrl + "/" + "{movieId}",
+                        MovieInfo.class, "Jaws"));
+
+        Assertions.assertThat(exception.getMessage().equals("404 NotFound"));
+    }
 }

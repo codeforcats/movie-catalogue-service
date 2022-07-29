@@ -25,7 +25,7 @@ class RatedMovieInfoControllerTest {
     private MovieRatingProvider movieRatingProvider;
 
     @Test
-    public void allMovieRatingsAndMovieInfoAvailable() throws Exception {
+    public void whenUserValidAndMovieRatingsExistMovieInfosExistShouldReturnFullyPopulatedList() throws Exception {
 
         Mockito.when(movieRatingProvider.getMovieRatings("joe"))
                 .thenReturn(Optional.of(
@@ -48,7 +48,18 @@ class RatedMovieInfoControllerTest {
     }
 
     @Test
-    public void movieRatingsNotAvailable() throws Exception {
+    public void whenInvalidUserShouldReturnStatusNotFound() throws Exception {
+
+        Mockito.when(movieRatingProvider.getMovieRatings("foo"))
+                .thenThrow(new ResourceNotFoundException());
+
+        String expectedContent = "";
+        mockMvc.perform(MockMvcRequestBuilders.get("/ratedMovieInfos/{userId}", "foo"))
+                .andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
+
+    @Test
+    public void whenValidUserAndNoMovieRatingsShouldReturnEmptyList() throws Exception {
 
         Mockito.when(movieRatingProvider.getMovieRatings("bob"))
                 .thenReturn(Optional.empty());
@@ -64,7 +75,7 @@ class RatedMovieInfoControllerTest {
 
 
     @Test
-    public void someMovieInfoNotAvailable() throws Exception {
+    public void whenMovieInfoNotAvailableShouldReturnEmptyDescriptionInMovieRating() throws Exception {
 
         Mockito.when(movieRatingProvider.getMovieRatings("joe"))
                 .thenReturn(Optional.of(

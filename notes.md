@@ -19,5 +19,8 @@ docker build -t rated-movie-info-service-image .
 ## acceptance test 1  (for movie found)
 * curl http://localhost:8081/ratedMovieInfos/joe
 
-## acceptance test 2  (for movie not found)
+## acceptance test 2  (for no ratings)
+* curl http://localhost:8081/ratedMovieInfos/jen
+
+## acceptance test 2  (for user not found)
 * curl http://localhost:8081/ratedMovieInfos/foo

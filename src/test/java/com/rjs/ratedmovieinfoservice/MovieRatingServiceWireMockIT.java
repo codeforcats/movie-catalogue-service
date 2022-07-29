@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
@@ -29,7 +30,7 @@ class MovieRatingServiceWireMockIT {
     private String movieRatingServiceUrl;
 
     @Test
-    void wireMockMovieRatingService() {
+    void getMovieRatingsShouldReturnPopulatedListWhenResourceFound() {
 
         movieRatingsServiceMock.stubFor(get(urlEqualTo("/movieRatings/joe"))
                 .willReturn(aResponse()
@@ -49,5 +50,24 @@ class MovieRatingServiceWireMockIT {
                 Arrays.asList(new MovieRating("Jaws", 4), new MovieRating("Star Wars", 3));
         List<MovieRating> movieRatings = Arrays.asList(responseEntity.getBody());
         Assertions.assertThat(movieRatings).isEqualTo(expectedMovieRatings);
+    }
+
+    @Test ()
+    void getMovieRatingsShouldReturnEmptyListWhenNoResourceFound()
+    {
+        movieRatingsServiceMock.stubFor(get(urlEqualTo("/movieRatings/foo"))
+                .willReturn(aResponse()
+                        .withStatus(404)));
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        Exception exception = org.junit.jupiter.api.Assertions.assertThrows(
+                HttpClientErrorException.NotFound.class,
+                ()-> restTemplate.getForEntity(movieRatingServiceUrl + "/" + "{userId}",
+                MovieRating[].class, "foo"));
+
+
+        Assertions.assertThat(exception.getMessage().equals("404 NotFound"));
+
     }
 }
