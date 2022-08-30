@@ -1,4 +1,4 @@
-package com.rjs.ratedmovieinfoservice;
+package com.rjs.ratedmovieinfo;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

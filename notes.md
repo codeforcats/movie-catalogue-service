@@ -1,15 +1,15 @@
 # Movie Info Service Notes
 
 ## make the executable jar file
-* ./mvnw package
+* ./mvnw clean package
 
 ## then, EITHER
 ## run the jar file from the command line
-java -jar target/rated-movie-info-service-0.0.1-SNAPSHOT.jar
+java -jar target/rated-movie-info-0.0.1-SNAPSHOT.jar
 
 ## OR
 ## first build a docker image which runs the executable jar file
-docker build -t rated-movie-info-service-image .
+docker build -t rated-movie-info-image .
 
 ## and then run the image in a container, and run its dependencies in their containers, 
 ## all on the same docker host. 

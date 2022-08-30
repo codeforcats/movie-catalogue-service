@@ -4,4 +4,4 @@
  *
  * @author richard
  */
-package com.rjs.ratedmovieinfoservice;
+package com.rjs.ratedmovieinfo;

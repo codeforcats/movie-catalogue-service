@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.rjs</groupId>
-	<artifactId>rated-movie-info-service</artifactId>
+	<artifactId>rated-movie-info</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>rated-movie-info-service</name>
+	<name>rated-movie-info</name>
 	<description>main orchestrator for movie-catalogue application</description>
 	<properties>
 		<java.version>17</java.version>

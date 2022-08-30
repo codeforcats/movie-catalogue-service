@@ -1,4 +1,4 @@
-package com.rjs.ratedmovieinfoservice;
+package com.rjs.ratedmovieinfo;
 
 import lombok.*;
 

@@ -1,4 +1,4 @@
-package com.rjs.ratedmovieinfoservice;
+package com.rjs.ratedmovieinfo;
 
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import org.assertj.core.api.Assertions;

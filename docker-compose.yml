@@ -3,7 +3,7 @@ services:
 
   rated-movie-info-service:
     container_name: rated-movie-info-container
-    image: rated-movie-info-service-image
+    image: rated-movie-info-image
     ports:
       - 8081:8081
     environment:
@@ -11,12 +11,12 @@ services:
 
   movie-info-service:
     container_name: movie-info-container
-    image: movie-info-service-image
+    image: movie-info-image
     ports:
       - 8082:8082
 
   movie-rating-service:
     container_name: movie-rating-container
-    image: movie-rating-service-image
+    image: movie-rating-image
     ports:
       - 8083:8083

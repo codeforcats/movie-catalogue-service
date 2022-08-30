@@ -1,4 +1,4 @@
-package com.rjs.ratedmovieinfoservice;
+package com.rjs.ratedmovieinfo;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
