@@ -1,4 +1,4 @@
-# Movie Info Service Notes
+# Movie Info Notes
 
 ## make the executable jar file
 * ./mvnw clean package
